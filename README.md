@@ -1,7 +1,7 @@
 
 # Curso de Estruturas de dados
 
-Professor: Alexandre Rademaker
-Mestrado da EMAp
-2013 - Trimestre 1
+- Professor: Alexandre Rademaker
+- Mestrado da EMAp
+- Período: 2013.T1
 
