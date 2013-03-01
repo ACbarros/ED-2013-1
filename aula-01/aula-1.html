@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
 <meta name="title" content="Estruturas de Dados - Aula 1"/>
 <meta name="generator" content="Org-mode"/>
-<meta name="generated" content="2013-02-28T23:22-0300"/>
+<meta name="generated" content="2013-03-01T00:04-0300"/>
 <meta name="author" content="Alexandre Rademaker"/>
 <meta name="description" content=""/>
 <meta name="keywords" content=""/>
@@ -336,10 +336,10 @@ Livro Texto:
 <p>
 <a href="http://www.cs.berkeley.edu/~vazirani/algorithms.html">http://www.cs.berkeley.edu/~vazirani/algorithms.html</a>
 </p>
+<p>
+Cursos online (coursera.org):
+</p>
 <ul>
-<li>Coursera:
-
-</li>
 <li><a href="https://www.coursera.org/course/algs4partI">https://www.coursera.org/course/algs4partI</a>
 </li>
 <li><a href="https://www.coursera.org/course/algs4partII">https://www.coursera.org/course/algs4partII</a>
@@ -427,6 +427,11 @@ saber o valor preciso de \(F_{100}\) ou \(F_{200}\)?
 </pre>
 
 
+<pre class="example">
+55
+</pre>
+
+
 <p>
 Perguntas:
 </p>
@@ -484,13 +489,25 @@ Imagine um computador capaz de executar 40 trilhões de passos por segundo
 </pre>
 
 
+<pre class="example">
+forty trillion
+</pre>
+
+
+
+
 
 <pre class="src src-lisp">(log 40000000000000 2)
 </pre>
 
 
+<pre class="example">
+45.185066
+</pre>
+
+
 <p>
-Lembrando: 2<sup>x</sup> / 2<sup>y</sup> = 2<sup>(x - y)</sup>
+Lembrando: \(\frac{2^x}{2^y} = 2^{(x - y)}\).
 </p>
 
 
@@ -499,12 +516,11 @@ Lembrando: 2<sup>x</sup> / 2<sup>y</sup> = 2<sup>(x - y)</sup>
 </pre>
 
 
-<p>
-Moore’s law
-fib1(n) é proporcional à 2<sup>(0.694n)</sup> ≈ (1.6)<sup>n</sup>
-Fn+1 demora 1.6 * o tempo de fn
-Logo se conseguirmos computar hoje F100 podemos no ano que vem computar F101!
-</p>
+<pre class="example">
+92.81493
+</pre>
+
+
 <p>
 Em anos:
 </p>
@@ -513,6 +529,24 @@ Em anos:
 
 <pre class="src src-lisp">(/ (expt 2 92) (* 60.0 60 24 360)) 
 </pre>
+
+
+<pre class="example">
+1.592001e+20
+</pre>
+
+
+<p>
+Mas e considerando a <a href="http://en.wikipedia.org/wiki/Moore's_law">Lei de Moore</a>? 
+</p>
+<ul>
+<li>fib1(n) é proporcional à \(2^{0.694n} \approx 1.6^n\)
+</li>
+<li>\(F_{n+1}\) demora 1.6 vezes o tempo de \(f_n\)
+</li>
+<li>Logo se conseguirmos computar hoje \(F_{100}\) podemos, no ano que vem, computar $F<sub>101</sub>$!
+</li>
+</ul>
 
 
 
@@ -540,6 +574,11 @@ Solução recursiva repete computações -&gt; vide Tree
 </pre>
 
 
+<pre class="example">
+55
+</pre>
+
+
 <p>
 Ou usando <b>repetição</b> ao invés de <b>recursão</b>:
 </p>
@@ -560,6 +599,13 @@ Ou usando <b>repetição</b> ao invés de <b>recursão</b>:
 </pre>
 
 
+<pre class="example">
+55
+</pre>
+
+
+
+
 
 <pre class="src src-lisp">(<span style="color: #a020f0;">defun</span> <span style="color: #0000ff;">fib4</span> (n)
   (<span style="color: #a020f0;">do*</span> ((count 1 (+ 1 count))
@@ -569,6 +615,11 @@ Ou usando <b>repetição</b> ao invés de <b>recursão</b>:
        ((&gt;= count (- n 1)) z)))
 
 (fib4 10)
+</pre>
+
+
+<pre class="example">
+55
 </pre>
 
 
@@ -664,115 +715,27 @@ lines(my,data$f2, type=<span style="color: #8b2252;">"l"</span>, col=<span style
 
 
 <p>
-<img src="plot.png"  alt="plot.png" />
+<img src="plot1.png"  alt="plot1.png" />
 </p>
 
 
 
-
-<pre class="src src-R"><span style="color: #0000ff;">f1</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(n) n*n
-<span style="color: #0000ff;">f2</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(n) 2*n + 20
-my <span style="color: #008b8b;">&lt;-</span> seq(1, 10, by = 0.1)
-<span style="color: #0000ff;">f3</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(n) f1(n)/f2(n)
+<pre class="src src-R"><span style="color: #0000ff;">f3</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(n) f1(n)/f2(n)
 <span style="color: #0000ff;">f4</span> <span style="color: #008b8b;">&lt;-</span> <span style="color: #a020f0;">function</span>(n) f2(n)/f1(n)
-data.frame(my, f3(my), f4(my))
+data <span style="color: #008b8b;">&lt;-</span> data.frame(serie = my, f1_f2 = f3(my), f2_f1 = f4(my))
+bp <span style="color: #008b8b;">&lt;-</span> ggplot(data, aes(my), ylab = <span style="color: #8b2252;">""</span>) + 
+  geom_line(aes(y = f1_f2, colour = <span style="color: #8b2252;">"f1/f2"</span>)) + 
+  geom_line(aes(y = f2_f1, colour = <span style="color: #8b2252;">"f2/f1"</span>)) +
+  opts(legend.title = theme_blank()) + ylab(<span style="color: #8b2252;">""</span>) 
+bp
 </pre>
 
 
+<p>
+<img src="plot2.png"  alt="plot2.png" />
+</p>
 
-<pre class="example">     my     f3.my.     f4.my.
-1   1.0 0.04545455 22.0000000
-2   1.1 0.05450450 18.3471074
-3   1.2 0.06428571 15.5555556
-4   1.3 0.07477876 13.3727811
-5   1.4 0.08596491 11.6326531
-6   1.5 0.09782609 10.2222222
-7   1.6 0.11034483  9.0625000
-8   1.7 0.12350427  8.0968858
-9   1.8 0.13728814  7.2839506
-10  1.9 0.15168067  6.5927978
-11  2.0 0.16666667  6.0000000
-12  2.1 0.18223140  5.4875283
-13  2.2 0.19836066  5.0413223
-14  2.3 0.21504065  4.6502836
-15  2.4 0.23225806  4.3055556
-16  2.5 0.25000000  4.0000000
-17  2.6 0.26825397  3.7278107
-18  2.7 0.28700787  3.4842250
-19  2.8 0.30625000  3.2653061
-20  2.9 0.32596899  3.0677765
-21  3.0 0.34615385  2.8888889
-22  3.1 0.36679389  2.7263267
-23  3.2 0.38787879  2.5781250
-24  3.3 0.40939850  2.4426079
-25  3.4 0.43134328  2.3183391
-26  3.5 0.45370370  2.2040816
-27  3.6 0.47647059  2.0987654
-28  3.7 0.49963504  2.0014609
-29  3.8 0.52318841  1.9113573
-30  3.9 0.54712230  1.8277449
-31  4.0 0.57142857  1.7500000
-32  4.1 0.59609929  1.6775729
-33  4.2 0.62112676  1.6099773
-34  4.3 0.64650350  1.5467820
-35  4.4 0.67222222  1.4876033
-36  4.5 0.69827586  1.4320988
-37  4.6 0.72465753  1.3799622
-38  4.7 0.75136054  1.3309190
-39  4.8 0.77837838  1.2847222
-40  4.9 0.80570470  1.2411495
-41  5.0 0.83333333  1.2000000
-42  5.1 0.86125828  1.1610919
-43  5.2 0.88947368  1.1242604
-44  5.3 0.91797386  1.0893556
-45  5.4 0.94675325  1.0562414
-46  5.5 0.97580645  1.0247934
-47  5.6 1.00512821  0.9948980
-48  5.7 1.03471338  0.9664512
-49  5.8 1.06455696  0.9393579
-50  5.9 1.09465409  0.9135306
-51  6.0 1.12500000  0.8888889
-52  6.1 1.15559006  0.8653588
-53  6.2 1.18641975  0.8428720
-54  6.3 1.21748466  0.8213656
-55  6.4 1.24878049  0.8007812
-56  6.5 1.28030303  0.7810651
-57  6.6 1.31204819  0.7621671
-58  6.7 1.34401198  0.7440410
-59  6.8 1.37619048  0.7266436
-60  6.9 1.40857988  0.7099349
-61  7.0 1.44117647  0.6938776
-62  7.1 1.47397661  0.6784368
-63  7.2 1.50697674  0.6635802
-64  7.3 1.54017341  0.6492775
-65  7.4 1.57356322  0.6355004
-66  7.5 1.60714286  0.6222222
-67  7.6 1.64090909  0.6094183
-68  7.7 1.67485876  0.5970653
-69  7.8 1.70898876  0.5851414
-70  7.9 1.74329609  0.5736260
-71  8.0 1.77777778  0.5625000
-72  8.1 1.81243094  0.5517452
-73  8.2 1.84725275  0.5413444
-74  8.3 1.88224044  0.5312818
-75  8.4 1.91739130  0.5215420
-76  8.5 1.95270270  0.5121107
-77  8.6 1.98817204  0.5029746
-78  8.7 2.02379679  0.4941208
-79  8.8 2.05957447  0.4855372
-80  8.9 2.09550265  0.4772125
-81  9.0 2.13157895  0.4691358
-82  9.1 2.16780105  0.4612969
-83  9.2 2.20416667  0.4536862
-84  9.3 2.24067358  0.4462944
-85  9.4 2.27731959  0.4391127
-86  9.5 2.31410256  0.4321330
-87  9.6 2.35102041  0.4253472
-88  9.7 2.38807107  0.4187480
-89  9.8 2.42525253  0.4123282
-90  9.9 2.46256281  0.4060810
-91 10.0 2.50000000  0.4000000
-</pre>
+
 
 
 </div>
@@ -781,7 +744,7 @@ data.frame(my, f3(my), f4(my))
 </div>
 
 <div id="postamble">
-<p class="date">Date: 2013-02-28T23:22-0300</p>
+<p class="date">Date: 2013-03-01T00:04-0300</p>
 <p class="author">Author: Alexandre Rademaker</p>
 <p class="creator"><a href="http://orgmode.org">Org</a> version 7.9.3f with <a href="http://www.gnu.org/software/emacs/">Emacs</a> version 24</p>
 <a href="http://validator.w3.org/check?uri=referer">Validate XHTML 1.0</a>
