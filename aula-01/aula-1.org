@@ -15,8 +15,8 @@
 
 ** Sobre o que não é o curso?
 
-- Ensinar a programar?
-- Usarei exemplos em CL, R e Python
+- Ensinar a programar
+- Mas... Usarei exemplos em CL, R e Python
 
 ** Outras informações
 
@@ -32,14 +32,23 @@
 
 ** Recursos
 
-- site do curso https://github.com/arademaker/ED-2013-1
+Site do curso:
 
-- Coursera
- - https://www.coursera.org/course/algs4partI
- - https://www.coursera.org/course/algs4partII
+https://github.com/arademaker/ED-2013-1
 
-- Livro Texto http://www.cs.berkeley.edu/~vazirani/algorithms.html
-- Complementar http://www.amazon.com/Algorithm-Design-Jon-Kleinberg/dp/0321295358
+Livro Texto:
+
+http://www.cs.berkeley.edu/~vazirani/algorithms.html
+
+- Coursera:
+
+- https://www.coursera.org/course/algs4partI
+- https://www.coursera.org/course/algs4partII
+
+Complementar:
+
+- http://www.amazon.com/Algorithm-Design-Jon-Kleinberg/dp/0321295358
+- http://www.amazon.com/Python-Algorithms-Mastering-Language-Experts/dp/1430232374
 
 * Algorítmos
 
