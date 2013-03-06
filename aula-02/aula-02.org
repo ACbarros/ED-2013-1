@@ -1,0 +1,355 @@
+#+title: Estruturas de Dados - Aula 2
+#+author: Alexandre Rademaker
+#+startup: showall
+#+property: cache yes
+#+property: session *R*
+#+property: exports both
+#+property: results value
+
+* Como analisar complexidade de algoritmos
+
+** Exercício 0.3
+
+*** A
+
+#+BEGIN_SRC lisp
+  (defun fib2 (n)
+    (labels ((calc-fib (n a b)
+               (if (= n 0)
+                   a
+                   (calc-fib (- n 1) b (+ a b)))))
+      (calc-fib n 0 1)))
+
+  (>= (fib2 6) (expt 2 (* 0.5 6)))
+
+  ; is it a prove?
+  (mapcar (lambda (x) (list (fib2 x) (expt 2 (* 0.5 x)))) (list 6 7 8 9 10 11 12))
+#+END_SRC
+
+#+RESULTS[2f1e337c53f97a7d365f4f161111579702059399]:
+|   8 |       8.0 |
+|  13 | 11.313708 |
+|  21 |      16.0 |
+|  34 | 22.627417 |
+|  55 |      32.0 |
+|  89 | 45.254833 |
+| 144 |      64.0 |
+
+*** B
+
+#+name: fibs
+#+BEGIN_SRC lisp
+  (mapcar (lambda (z) 
+            (log (/ (fib2 (car z)) (fib2 (cadr z))) 2)) 
+          (loop for x from 1 to 100 
+                for y from 2 to 101 collect (list y x)))
+#+END_SRC
+
+#+RESULTS[f7b20740587ccb55b5e0ebcec1c9bd58b16bffa5]: fibs
+| 0.0 | 1.0 | 0.5849625 | 0.7369656 | 0.6780719 | 0.7004397 | 0.6918777 | 0.6951454 | 0.6938969 | 0.6943737 | 0.6941916 | 0.69426113 | 0.69423455 | 0.69424474 | 0.69424087 | 0.6942423 | 0.69424176 | 0.694242 | 0.6942419 | 0.69424194 | 0.6942419 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 | 0.69424194 |
+
+#+BEGIN_SRC R :var B=fibs :results output graphics :file plot.png
+plot(t(B), type="l")
+#+END_SRC
+
+#+RESULTS[f15f59d102239d3cdc8ca84dd75938d8ad896dec]:
+[[file:plot.png]]
+
+Using [[http://www.wolframalpha.com/input/?i=Plot%5BLog%5B2%2CFibonnaci%5Bn%2B1%5D%2FFibonnaci%5Bn%5D%5D%2C%7Bn%2C1%2C1000000%7D%2C+PlotRange+-%3E+Automatic%5D][Wolfram Alpha]].
+
+*** C
+
+#+BEGIN_SRC lisp
+  (loop for x from 1 to 100 collect (list x (< (fib2 x) (expt 2 (* x 0.694)))))
+#+END_SRC
+
+#+RESULTS[b9ed2fef31d1c4419ce48ba39acce042f9b96d4b]:
+|   1 | t |
+|   2 | t |
+|   3 | t |
+|   4 | t |
+|   5 | t |
+|   6 | t |
+|   7 | t |
+|   8 | t |
+|   9 | t |
+|  10 | t |
+|  11 | t |
+|  12 | t |
+|  13 | t |
+|  14 | t |
+|  15 | t |
+|  16 | t |
+|  17 | t |
+|  18 | t |
+|  19 | t |
+|  20 | t |
+|  21 | t |
+|  22 | t |
+|  23 | t |
+|  24 | t |
+|  25 | t |
+|  26 | t |
+|  27 | t |
+|  28 | t |
+|  29 | t |
+|  30 | t |
+|  31 | t |
+|  32 | t |
+|  33 | t |
+|  34 | t |
+|  35 | t |
+|  36 | t |
+|  37 | t |
+|  38 | t |
+|  39 | t |
+|  40 | t |
+|  41 | t |
+|  42 | t |
+|  43 | t |
+|  44 | t |
+|  45 | t |
+|  46 | t |
+|  47 | t |
+|  48 | t |
+|  49 | t |
+|  50 | t |
+|  51 | t |
+|  52 | t |
+|  53 | t |
+|  54 | t |
+|  55 | t |
+|  56 | t |
+|  57 | t |
+|  58 | t |
+|  59 | t |
+|  60 | t |
+|  61 | t |
+|  62 | t |
+|  63 | t |
+|  64 | t |
+|  65 | t |
+|  66 | t |
+|  67 | t |
+|  68 | t |
+|  69 | t |
+|  70 | t |
+|  71 | t |
+|  72 | t |
+|  73 | t |
+|  74 | t |
+|  75 | t |
+|  76 | t |
+|  77 | t |
+|  78 | t |
+|  79 | t |
+|  80 | t |
+|  81 | t |
+|  82 | t |
+|  83 | t |
+|  84 | t |
+|  85 | t |
+|  86 | t |
+|  87 | t |
+|  88 | t |
+|  89 | t |
+|  90 | t |
+|  91 | t |
+|  92 | t |
+|  93 | t |
+|  94 | t |
+|  95 | t |
+|  96 | t |
+|  97 | t |
+|  98 | t |
+|  99 | t |
+| 100 | t |
+
+#+BEGIN_SRC lisp
+  (loop for x from 1 to 100 collect (list x (< (fib2 x) (expt 2 (* x 0.68)))))
+#+END_SRC
+
+#+RESULTS[9949a05aafff2394036a7b745863bd8cf56032b0]:
+|   1 | t   |
+|   2 | t   |
+|   3 | t   |
+|   4 | t   |
+|   5 | t   |
+|   6 | t   |
+|   7 | t   |
+|   8 | t   |
+|   9 | t   |
+|  10 | t   |
+|  11 | t   |
+|  12 | t   |
+|  13 | t   |
+|  14 | t   |
+|  15 | t   |
+|  16 | t   |
+|  17 | t   |
+|  18 | t   |
+|  19 | t   |
+|  20 | t   |
+|  21 | t   |
+|  22 | t   |
+|  23 | t   |
+|  24 | t   |
+|  25 | t   |
+|  26 | t   |
+|  27 | t   |
+|  28 | t   |
+|  29 | t   |
+|  30 | t   |
+|  31 | t   |
+|  32 | t   |
+|  33 | t   |
+|  34 | t   |
+|  35 | t   |
+|  36 | t   |
+|  37 | t   |
+|  38 | t   |
+|  39 | t   |
+|  40 | t   |
+|  41 | t   |
+|  42 | t   |
+|  43 | t   |
+|  44 | t   |
+|  45 | t   |
+|  46 | t   |
+|  47 | t   |
+|  48 | t   |
+|  49 | t   |
+|  50 | t   |
+|  51 | t   |
+|  52 | t   |
+|  53 | t   |
+|  54 | t   |
+|  55 | t   |
+|  56 | t   |
+|  57 | t   |
+|  58 | t   |
+|  59 | t   |
+|  60 | t   |
+|  61 | t   |
+|  62 | t   |
+|  63 | t   |
+|  64 | t   |
+|  65 | t   |
+|  66 | t   |
+|  67 | t   |
+|  68 | t   |
+|  69 | t   |
+|  70 | t   |
+|  71 | t   |
+|  72 | t   |
+|  73 | t   |
+|  74 | t   |
+|  75 | t   |
+|  76 | t   |
+|  77 | t   |
+|  78 | t   |
+|  79 | t   |
+|  80 | t   |
+|  81 | t   |
+|  82 | nil |
+|  83 | nil |
+|  84 | nil |
+|  85 | nil |
+|  86 | nil |
+|  87 | nil |
+|  88 | nil |
+|  89 | nil |
+|  90 | nil |
+|  91 | nil |
+|  92 | nil |
+|  93 | nil |
+|  94 | nil |
+|  95 | nil |
+|  96 | nil |
+|  97 | nil |
+|  98 | nil |
+|  99 | nil |
+| 100 | nil |
+
+** Loop-free 
+
+- conta os comandos
+- lista tamanho =n= call de =append= é $O(1)$ e =insert(0, x)= é $O(n)$. Considere
+
+#+BEGIN_SRC python
+  nums.append(1)
+  nums.insert(0,2)
+#+END_SRC
+
+Qual complexidade? $O(1) + O(n+1) = O(1) + O(n) = O(n)$.
+
+** Diferença entre insert e append
+
+Com append, quase instantâneo. Linear.
+
+#+BEGIN_SRC python 
+count = 10**5
+nums = []
+for i in range(count):
+    nums.append(i)
+nums.reverse()
+#+END_SRC
+
+Com insert, demora, quadrático. Por que?
+
+#+BEGIN_SRC python
+  count = 10**5
+  nums = []
+  for i in range(count):
+      nums.insert(0, i)
+  nums
+#+END_SRC
+
+Listas em Python são vetores/arrays, não listas encadeadas.
+
+** Loops
+
+Cases $O(n)$:
+
+#+BEGIN_SRC python
+  s = 0 
+  for x in seq:
+      s += x
+#+END_SRC
+
+#+BEGIN_SRC python
+squares = [x**2 for x in seq]
+#+END_SRC
+
+Outros casos do Livro PyAlgo, "taking the asymptotics for a
+Spin". Ultimo caso, ainda $O(n^2)$. Em Lisp para praticarmos!
+
+#+BEGIN_SRC lisp :results value
+  (defun range (start last)
+    (loop :for i :from start :to last 
+          :collect i))
+  
+  (let* ((seq (range 1 5))
+         (n (length seq))
+         (s nil))
+    (dolist (i (range 0 (- n 2)) (nreverse s))
+      (dolist (j (range (1+ i) (- n 1)) s)
+        (push (list i j) s))))
+#+END_SRC
+
+#+RESULTS[1b3784e183df3947812916e0849e400e9526e035]:
+| 0 | 1 |
+| 0 | 2 |
+| 0 | 3 |
+| 0 | 4 |
+| 1 | 2 |
+| 1 | 3 |
+| 1 | 4 |
+| 2 | 3 |
+| 2 | 4 |
+| 3 | 4 |
+
+** Extra
+
+- [[http://www.cs.princeton.edu/~wayne/kleinberg-tardos/01StableMatching.pdf][Stable Matching]] and [[http://en.wikipedia.org/wiki/Stable_marriage_problem][Wikipedia Stable marriage problem]]
+- Cap 1
