@@ -60,10 +60,10 @@ Using [[http://www.wolframalpha.com/input/?i=Plot%5BLog%5B2%2CFibonnaci%5Bn%2B1%
 *** C
 
 #+BEGIN_SRC lisp
-  (loop for x from 1 to 100 collect (list x (< (fib2 x) (expt 2 (* x 0.694)))))
+  (loop for x from 1 to 100 collect (list x (< (fib2 x) (expt 2 (* x 0.69400)))))
 #+END_SRC
 
-#+RESULTS[b9ed2fef31d1c4419ce48ba39acce042f9b96d4b]:
+#+RESULTS[91ce14a26ebbdc3d4eefb88b1ab1f745e620bff6]:
 |   1 | t |
 |   2 | t |
 |   3 | t |
@@ -166,7 +166,7 @@ Using [[http://www.wolframalpha.com/input/?i=Plot%5BLog%5B2%2CFibonnaci%5Bn%2B1%
 | 100 | t |
 
 #+BEGIN_SRC lisp
-  (loop for x from 1 to 100 collect (list x (< (fib2 x) (expt 2 (* x 0.68)))))
+  (loop for x from 50 to 100 collect (list x (< (fib2 x) (expt 2 (* x 0.68)))))
 #+END_SRC
 
 #+RESULTS[9949a05aafff2394036a7b745863bd8cf56032b0]:
@@ -352,4 +352,3 @@ Spin". Ultimo caso, ainda $O(n^2)$. Em Lisp para praticarmos!
 ** Extra
 
 - [[http://www.cs.princeton.edu/~wayne/kleinberg-tardos/01StableMatching.pdf][Stable Matching]] and [[http://en.wikipedia.org/wiki/Stable_marriage_problem][Wikipedia Stable marriage problem]]
-- Cap 1
